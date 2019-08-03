@@ -1,0 +1,135 @@
+@charset "UTF-8";
+
+body{
+    width: calc(100%);
+    height: calc(100%);
+    background: #ECF0F1;
+}
+
+#header{
+    width: 100%;
+    background-color: #0B5EA5;
+
+    .content{
+        width: 1150px;
+        height: 30px;
+        margin: 0 auto;
+
+        .skin-peeler{
+            width: 80px;
+            margin: auto;
+            text-align: center;
+            color: #ffffff;
+            font-size: 16px;
+            line-height: 30px;
+        }
+        .skin-peeler:hover{
+            background-color: #cccccc;
+            color: #3c3c3c;
+            cursor: pointer;
+        }
+    }
+
+    .menu{
+        // display: none;
+        overflow-y: hidden;
+        position: relative;
+        width: 100%;
+        height: 0;
+        // padding: 15px 0;
+        background-color: #eef2f3;
+        transition: height 0.3s;
+
+        .skin-layout{            
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            width: 1066px;
+            transform: translateX(-50%);
+            padding: 25px 15px 15px 15px;
+            background-color: #ffffff;
+
+            .skin-list{
+                width: 1036px;
+                height: 128px;
+                margin: 0 auto;
+                box-sizing: border-box;
+
+                li{
+                    float: left;
+                    margin-left: 20px;
+
+                    .small-pic-box{
+                        border: 1px solid transparent;
+                    
+                        img{
+                            width: 154px;
+                            height: 92px;
+                        }
+                    }
+
+                    .on{
+                        border-color: #ff9500;
+                    }
+                    .skin-name{
+                        margin-top: 5px;
+                        padding-left: 22px;
+                        line-height: 20px;
+
+                        input{
+                            width: 18px;
+                            height: 18px;
+                            vertical-align: middle;
+                            color: #ff9500;
+                        }
+                        
+                        label{
+                            margin-left: 10px;
+                            font-size: 10px;
+                            vertical-align: middle;
+                        }
+                    }
+                }
+                li:first-of-type{
+                    margin-left: 0;
+                }
+            }
+
+            .btn-wrap{
+                display: flex;
+                justify-content: center;
+                padding-left: 32px;
+                margin-top: 30px;
+
+                a{
+                    float: left;
+                    height: 28px;
+                    width: 70px;
+                    color: #fff;
+                    line-height: 28px;
+                    text-align: center;
+                }
+                a.sure-btn{
+                    background-color: #e54724;
+                }
+
+                a.cancel-btn{
+                    margin-left: 20px;
+                    background-color: #b6b6be;
+                }
+            }
+        }
+    }
+
+    .active{
+        display: block;
+    }
+}
+
+
+
+
+
+
+
+

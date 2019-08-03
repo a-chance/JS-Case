@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>wwg</title>
+    <style>
+        body{font-family:"Microsoft yahei";}
+        body,dl,dd,p,h1,h2,h3,h4,h5,h6{margin:0;}
+        ol,ul,li{margin:0;padding:0;list-style:none;}
+        img{border:none;display: block;}
+        a{text-decoration: none; color: inherit;}
+        input{outline: none;}
+        .fl{float: left;}
+        .fr{float: right;}
+        .clearfix::after{display: block; content: ""; clear: both;}
+        html, body{
+            height: 100%;
+        }
+
+        .wrap{
+            width: 100%;
+            height: 100%;
+        }
+
+        .wrap .box1{
+            position: fixed;
+            width: 60px;
+            left: 20px;
+            bottom: 150px;
+            color: #ffffff;
+            font-size: 16px;
+            background-color: #ffffff;
+        }
+        .box1 li{
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1px;
+            background-color: rgba(0, 0, 0, .8);
+            text-align: center;
+            line-height: 60px;
+            letter-spacing: 2px;
+            user-select: none;
+            cursor: pointer;
+        }
+        .box1 li:last-child{
+            margin-bottom: 0;
+        }
+        .box1 li.active{
+            background-color: orange;
+        }
+
+        .wrap .box2{
+            width: 100%;
+            height: 100%;
+            color: #ffffff;
+            font-size: 200px;
+        }
+
+        .box2 li{
+            /* display: none; */
+            width: 100%;
+            line-height: 1;
+            text-align: center;
+        }
+        .box2 li.active{
+            display: block;
+        }
+        .box2 li:nth-child(1){
+            background-color: red;
+        }
+        .box2 li:nth-child(2){
+            background-color: orangered;
+        }
+        .box2 li:nth-child(3){
+            background-color: yellow;
+        }
+        .box2 li:nth-child(4){
+            background-color: green;
+        }
+        .box2 li:nth-child(5){
+            background-color: blue;
+        }
+
+        .wrap .box3{
+            overflow: hidden;
+            position: fixed;
+            bottom: 100px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+        }
+
+        .box3 .go-top{
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 12px 0;
+            background-color: rgba(39, 216, 240, 0.8);
+            text-align: center;
+            font-size: 14px;
+            color: #ffffff;
+            box-sizing: border-box;
+            user-select: none;
+            cursor: pointer;
+        }
+        .box3 p.on{
+            display: block;
+        }
+        .wrap .img{
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 411px;
+            height: 469px;
+            background-attachment: scroll;
+            transform: translate(-50%, -50%);
+        }
+        .wrap img.active{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <ul class="box1">
+            <li class="active">一楼</li>
+            <li>二楼</li>
+            <li>三楼</li>
+            <li>四楼</li>
+            <li>五楼</li>
+        </ul>
+        <ul class="box2">
+            <li class="active">一</li>
+            <li>二</li>
+            <li>三</li>
+            <li>四</li>
+            <li>五</li>
+        </ul>
+        <div class="box3">
+            <p class="go-top">返回<br>顶部</p>
+        </div>
+        <img src="images/timg.gif" alt="" class="img" width="411" height="469">
+    </div>
+    <script>
+        let box1 = document.getElementsByClassName("box1")[0],
+            aBox1Li = box1.getElementsByTagName("li");
+
+        let box2 = document.getElementsByClassName("box2")[0],
+            aBox2Li = box2.getElementsByTagName("li");
+
+        let goTop = document.getElementsByClassName("go-top")[0];
+        
+        let img = document.getElementsByClassName("img")[0]; 
+        {
+            // 让楼层的高度和可视区的高度相同
+            for(let i = 0; i < aBox2Li.length; i++){
+                aBox2Li[i].style.height = window.innerHeight + "px";
+                aBox2Li[i].style.lineHeight = window.innerHeight + "px";
+            }
+
+            // 记录上一次点击的是哪个按钮，便于清除样式，可以避免对每个li遍历一次
+            let index = 0;
+            let timeId = null;
+        
+
+            // 点击按钮跳转到对应的楼层
+            for(let i = 0; i < aBox1Li.length; i++){
+                aBox1Li[i].onclick = function () {
+                    for(var j = 0; j < aBox1Li.length; j++){
+                        aBox1Li[j].classList.remove("active");
+                    }
+                    aBox1Li[i].classList.add("active");
+                    /********************************/
+                    /********** 这里会有bug *********/ 
+                    /********************************/
+                    // 因为电脑屏幕的差异，可能会有一点点误差，也就是，要给window.innerHeight加上几个像素，就可以解决bug
+                    window.scrollTo(0, i *( window.innerHeight + 2));
+                }
+            }
+
+            // 拖动滚动条时，按钮跟着高亮显示
+            window.onscroll = function () {
+                // 动态获取滚动距离
+                let scrollTop = window.scrollY;
+                
+                // 按钮高亮显示
+                for(let i = 0; i < aBox2Li.length; i++){
+                    if(scrollTop >= aBox2Li[i].offsetTop){
+                        // 清除上一张显示的类名
+                        aBox1Li[index].classList.remove("active");
+                        index = i;
+                        console.log(i);
+                        
+                        aBox1Li[i].classList.add("active");
+                    }
+                }
+
+                // 当滚动距离大于可视区的高度时让返回顶部按钮显示出来
+                if (scrollTop >= window.innerHeight) {
+                    goTop.classList.add("on");
+                }else{
+                    goTop.classList.remove("on");
+                }
+            }
+
+            // 给返回顶部绑定点击事件
+            goTop.onclick = function () {
+                img.classList.add("active");
+                let scrollTop = window.scrollY;
+
+                let timeId = setInterval(() => {
+                    scrollTop -= 100;
+                    
+                    if(scrollTop <= 0){
+                        clearInterval(timeId);
+                        img.classList.remove("active");
+                    }
+                    window.scrollTo(0, scrollTop);
+                }, 30)
+            }
+        }
+    </script>
+</body>
+</html>

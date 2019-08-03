@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>04全选不选反选</title>
+</head>
+<body>
+    <table id="dataList">
+        <caption>爱好</caption>
+        <thead>
+            <th><input type="checkbox" name="all" id="all">全选</th>
+            <!-- <th><input type="checkbox" name="fx" id="bx">不选</th> -->
+            <th><input type="checkbox" name="fx" id="fx">反选</th>
+        </thead>
+        <tbody id="tbody">
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>篮球</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>足球</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>羽毛球</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>爬山</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>游泳</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="hobby"></td>
+                <td>购物</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script>
+    let allSel = document.getElementById("all");
+    let revSel = document.getElementById("fx");
+    let tbody = document.getElementById("tbody");
+    let aHob = tbody.getElementsByTagName("input");
+    
+    // 点击全选，遍历input，让它全部选中
+    allSel.onclick = function () {
+        for(let i = 0; i < aHob.length; i++){
+            // 每次点击时，全选按钮的状态和每个按钮的相同
+            aHob[i].checked = allSel.checked;
+        }
+    }
+
+    // 1.反过来控制全选按钮：也就是说当没有一个aHob被选中时，点击反选按钮就让aHob全部选中，这就应该让allSel也选中
+    // 2.如果逐个点击aHob让它们全部选中，这就应该让allSel也选中
+
+    // 封装被选中的个数
+    function selTotal () {
+        let arr = [];
+        for(let i = 0; i < aHob.length; i++){
+            if(aHob[i].checked){
+                arr.push(1);
+            }
+        }
+        return arr.length;    
+    }
+
+    // 封装反选控制全选按钮的函数
+    function allCheckNow () {
+        let num = selTotal();
+
+        if(num == aHob.length){
+            allSel.checked = true;
+        }else{
+            allSel.checked = false;
+        }
+    }
+
+
+    // 反选
+    revSel.onclick = function () {
+        for(let i = 0; i < aHob.length; i++){
+            aHob[i].checked = !aHob[i].checked;
+            allCheckNow();
+        }
+    }
+
+    // 如果每个按钮选中的话就让全选按钮选中
+    for(let i = 0; i < aHob.length; i++){
+        aHob[i].onclick = function () {
+            allCheckNow();
+        }
+    }
+
+</script>
+</html>
