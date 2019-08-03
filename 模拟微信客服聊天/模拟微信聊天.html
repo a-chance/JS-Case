@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <script src=""></script>
+    <title>zuoye</title>
+    <style>
+        body{font-family:"Microsoft yahei";}
+        body,dl,dd,p,h1,h2,h3,h4,h5,h6{margin:0;}
+        ol,ul,li{margin:0;padding:0;list-style:none;}
+        img{border:none;display: block;}
+        a{text-decoration: none; color: inherit;}
+        input{outline: none;}
+        .fl{float: left;}
+        .fr{float: right;}
+        .clearfix::after{display: block; content: ""; clear: both;}
+        
+        .chat{
+            position: relative;
+            width: 370px;
+            height: 719px;
+            margin: 20px auto;
+            background:#fff url("images/iphone.png") no-repeat 0 0/cover;
+        }
+        .chat .chat-wrap{
+            position: absolute;
+            top: 71px;
+            left: 14px;
+            width: 342px;
+            height: 568px;
+            background-color: #ededed;
+        }
+        .chat-wrap .chat-personal{
+            position: relative;
+            display: flex;
+            align-items: center;
+            height: 50px;
+            padding: 0 15px;
+            font-size: 0;
+            color: #181818;
+            border: 1px solid #cccccc;;
+            box-sizing: border-box;
+        }
+        .chat-personal .left-arrow{
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: url("images/left-arrow.png") no-repeat center/cover;
+            /* vertical-align: text-bottom; */
+        }
+        .chat-personal .chat-name{
+            display: inline-block;
+            height: 18px;
+            font-size: 18px;
+            line-height: 18px;
+            vertical-align: text-bottom;
+        }
+        .chat-personal .nowinp{
+            display: none;
+            position: absolute;
+            width: 108px;
+            height: 18px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            margin: auto;
+            color: #3c3c3c;
+            font-size: 16px;
+        }
+
+        .chat-personal .on{
+            display: block;
+        }
+
+        .chat .chat-wrap .chat-list{
+            overflow-y: auto;
+            width: 100%;
+            height: 470px;
+            padding: 14px;
+            box-sizing: border-box;
+            box-sizing: border-box;
+        }
+        .chat-list .chat-item{
+            width: 100%;
+            min-height: 50px;
+            margin-bottom: 14px;
+        }
+
+        .chat-list .chat-item-odd{
+            display: flex;
+            justify-content: flex-start;
+        }
+        .chat-item .chat-pic{
+            flex-shrink: 1;
+            width: 50px;
+            height: 50px;
+            min-height: 50px;
+            border-radius: 10px;
+        }
+        .chat-item .chat-pic img{
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+        }
+        .chat-item .chat-con{
+            position: relative;
+            max-width: 225px;
+            min-height: 50px;            
+            height: auto;
+            padding: 0 15px;
+            font-size: 16px;
+            line-height: 50px;
+            background-color: #95ec69;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+        .chat-item-odd .chat-con{
+            margin-left: 20px;
+        }
+        .chat-item-odd .chat-con::before{
+            position: absolute;
+            display: block;
+            content: "";
+            width: 0;
+            height: 0;
+            top: 15px;
+            left: -10px;
+            border: 10px solid #95ec69;
+            border-left: 0;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+        .chat-list .active{
+            width: 100%;
+        }
+        .chat-list .active .chat-pic{
+            margin-left: 20px;
+        }
+        .active .chat-con{
+            background-color: #7358bc;
+            color: #fff;
+        }
+        .active .chat-con::before{
+            position: absolute;
+            display: block;
+            content: "";
+            width: 0;
+            height: 0;
+            top: 15px;
+            right: -10px;
+            border: 10px solid #7358bc;
+            border-right: 0;
+            border-top-color: transparent;
+            border-bottom-color: transparent;
+        }
+
+        .inp-wrap{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 50px;
+            padding: 0 10px;
+            background-color: #f7f7f7;
+            border-top: 1px solid #cccccc;
+        }
+
+        .inp-wrap .speak{
+            width: 25px;
+            height: 25px;
+            background: url("images/yuyin.png") no-repeat center/cover;
+        }
+
+        .inp-wrap .inp{
+            flex: 1;
+            height: 35px;
+            margin: 0 10px;
+            padding: 0 5px;
+            border: none;
+            background-color: #fff;
+            border-radius: 5px;
+            font-size: 14px;
+            line-height: 35px;
+            box-sizing: border-box;
+        }
+        .inp-wrap .expression{
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+            background: url("images/biaoqing.png") no-repeat center/cover;
+        }
+        .inp-wrap .send-wrap{
+            position: relative;
+        }
+        .inp-wrap .send-wrap .more{
+            width: 25px;
+            height: 25px;
+            background: url("images/qita.png") no-repeat center/cover;
+        }
+        .inp-wrap .send-wrap .btn{
+            width: 50px;
+            height: 25px;
+            color: #fff;
+            background-color: rgb(25, 173, 25);
+            border: none;
+            border-radius: 5px;
+            outline: none;
+            font-size: 12px;
+            line-height: 20px;
+            text-align: center;
+            cursor: pointer;
+        }
+        .send-wrap .tips{
+            position: absolute;
+            top: -40px;
+            right: -5px;
+            width: 120px;
+            height: 30px;
+            padding-left: 10px;
+            background-color: #dddddd;
+            color: #000000;
+            font-size: 12px;
+            line-height: 30px;
+            border-radius: 5px;
+        }
+        .send-wrap .tips::after{
+            position: absolute;
+            content: "";
+            bottom: -8px;
+            right: 20px;
+            width: 0;
+            height: 0;
+            border: 8px solid #dddddd;
+            border-bottom: none;
+            border-right-color: transparent;
+            border-left-color: transparent;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat">
+        <div class="chat-wrap">
+            <div class="chat-personal">
+                <span class="left-arrow fl"></span> 
+                <span class="chat-name fl">小薇</span>
+                <p class="nowinp">对方正在输入...</p>
+            </div>
+            <ul class="chat-list">
+                <!-- <li class="chat-item chat-item-odd">
+                    <div class="chat-pic">
+                        <img src="images/sun.jpg" alt="" width="50" height="50" id="headport">                        
+                    </div>
+                    <div class="chat-con">
+                        生活如此多交
+                    </div>
+                </li>
+                <li class="chat-item active clearfix">
+                    <div class="chat-pic fr">
+                        <img src="images/young.jpg" alt="" width="50" height="50" id="headport">                        
+                    </div>
+
+                    <div class="chat-con fr">
+                        生活如此多交
+                    </div>
+                </li> -->
+            </ul>
+            <div class="inp-wrap">
+                <span class="speak"></span>
+                <input type="text" class="inp">
+                <span class="expression"></span>
+                <div class="send-wrap">
+                    <span class="more" style="display: block;"></span>
+                    <button class="btn" style="display: none;">发送</button>
+                    <p class="tips" style="display: none;">发送内容不能为空！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let chatList = document.getElementsByClassName("chat-list")[0];
+        let inp = document.getElementsByClassName("inp")[0];
+        let more = document.getElementsByClassName("more")[0];
+        let btn = document.getElementsByClassName("btn")[0];
+        let tips = document.getElementsByClassName("tips")[0];
+        let nowinp = document.getElementsByClassName("nowinp")[0];
+        let data1 = ["在吗", "约吗"],
+            data2 = ["你先说事，我再决定在不在", "就凭你"];
+
+        // 封装切换头像的函数
+        function change_pic () {
+            // 头像切换（这里必须写在li生成之后，如果写在外面就会报错，因为li没有生成的话，就无法点击切换头像，js中不能给一个空对象设置点击事件，所以会报错）
+            let headport = document.getElementById("headport");
+            let mark = true;
+            headport.onclick = function () {
+                this.src = mark ? "images/young.jpg" : "images/sun.jpg";
+                mark = !mark;
+            }
+        }
+        // 封装发送消息的函数
+        function createLi () {
+            let con = inp.value;
+
+            // 1.字符串不能全为空格
+            // 2.字符串的内容前面的空格能被输出
+            // 3.字符串内容后面的空格能被输出
+            let conTrim = con.trim();
+            if (conTrim === "") {
+                tips.style.display = "block";
+                timeId = setTimeout(() => {
+                    tips.style.display = "none";
+                }, 1500);
+            } else {
+            // 创建li节点
+                let li = document.createElement("li");
+
+                li.innerHTML = `<li class="chat-item chat-item-odd">
+                                    <div class="chat-pic chat-item-odd fl">
+                                        <img src="images/sun.jpg" alt="" width="50" height="50" id="headport">                        
+                                    </div>
+                                    <div class="chat-con fl">${con}</div>
+                                </li>`;
+
+                // 将li添加到ul中
+                chatList.appendChild(li);
+                // 添加完成可以切换头像
+                change_pic();
+                // 发送消息时就要让“对方正在输入”显示,并且输入框清空，重新获取焦点
+                nowinp.classList.add("on");
+                inp.value = "";
+                inp.focus();
+                // 两秒后让“对方正在输入”隐藏，系统自动回复内容
+                let timeId = setTimeout(()=>{
+                    nowinp.classList.remove("on");
+                    // 创建系统回复的li
+                    let liActive = document.createElement("li");
+                    
+                    // 如果输入的关键字在数组中存在，就获取对应的序号进行回复
+                    let count = data1.indexOf(con);
+                    if(count !== -1){   // 序号存在，找到data2中对应的数据
+                        // 渲染数据
+                        liActive.innerHTML = `<li class="chat-item active clearfix">
+                                                <div class="chat-pic fr">
+                                                    <img src="images/young.jpg" alt="" width="50" height="50" id="headport">                        
+                                                </div>
+
+                                                <div class="chat-con fr">
+                                                    ${data2[count]}
+                                                </div>
+                                            </li>`;
+                            
+                    }else{
+                        liActive.innerHTML = `<li class="chat-item active clearfix">
+                                                <div class="chat-pic fr">
+                                                    <img src="images/young.jpg" alt="" width="50" height="50" id="headport">                        
+                                                </div>
+
+                                                <div class="chat-con fr">
+                                                    鬼刀一开，听不见，听不见...
+                                                </div>
+                                            </li>`;
+                    }
+                    
+                    // 将liActive插入到ul中
+                    chatList.appendChild(liActive);
+                    chatList.scrollTop = chatList.scrollHeight - chatList.offsetHeight;
+                }, 500)
+                chatList.scrollTop = chatList.scrollHeight - chatList.offsetHeight;
+            }
+        }
+            
+        // 1.当inp获取焦点时判断显示的那个按钮
+        inp.oninput = function (){
+            if (inp.value == "") {
+                btn.style.display = "none";
+                more.style.display = "block";
+            } else {
+                more.style.display = "none";
+                btn.style.display = "block";
+            }
+        }
+
+
+        // 2.发送消息实现
+        btn.onclick = function () {
+            createLi();
+        }    
+
+        // 绑定回车键
+        inp.onkeydown = function (ev) {
+            if(ev.keyCode === 13){
+                createLi();
+            }
+        }
+    
+    </script>
+</body>
+</html>

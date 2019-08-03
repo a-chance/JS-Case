@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>生成任意表格</title>
+    <style>
+        #output {
+            margin-top: 20px;
+        }
+
+        table {
+            border: 1px solid #ddd;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td {
+            border: 1px solid #ddd;
+            padding: 3px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>生成任意表格</h1>
+    <label for="row">行：</label><input type="text" id="row">
+    <label for="col">列：</label><input type="text" id="col">
+    <input type="button" value="生成表格" id="btn">
+    <div id="output">
+        <table>
+            <tr>
+                <!-- <td contenteditable="true">121</td>
+                <td>
+                    <a href="###">删除</a>
+                </td> -->
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    /*
+        需求：根据表单输入的行数和列数，动态的生成表格
+
+        步骤：
+            * 点击按钮的时候
+            * 获取行数和列数,就可以知道循环次数，外循环生成tr，内循环生成td
+            * 拼接好字符串，渲染到页面即可
+    */
+
+    (function () {
+
+        //找节点
+        var row = document.getElementById('row');
+        var col = document.getElementById('col');
+        var btn = document.getElementById('btn');
+        var output = document.getElementById('output');
+
+        //点击按钮的时候，拿到行和列数
+        btn.onclick = function () {
+
+            var rows = row.value.trim();
+            var cols = col.value.trim();
+            let tab = null;
+            if (rows && cols) {
+                //创建table节点
+                var table = document.createElement('table');
+
+                for (var i = 0; i < rows; i++) {
+                    var tr = document.createElement('tr');
+                    //第一列用来放序号
+                    var firstTd = document.createElement('td');
+                    firstTd.innerHTML = i + 1;
+                    tr.appendChild(firstTd);
+                    for (var j = 0; j < cols; j++) {
+                        var td = document.createElement('td');
+                        td.setAttribute("contenteditable", true)
+                        td.innerHTML = '单元格';
+                        tr.appendChild(td);
+                    }
+                    //最后一列
+                    var lastTd = document.createElement('td');
+                    lastTd.innerHTML = '<a href="###" class="del">删除</a>&nbsp;&nbsp;<a href="###" class="copy">复制</a>';
+                    tr.appendChild(lastTd);
+                    table.appendChild(tr);
+                }
+                output.appendChild(table);
+                
+                // 这里需要重新获取最新的tr和td,也就是要重新获取行和列，不然动态生成的对象无法保存到以前的获取的table中。
+                function createEle() {
+                    // 获取aCopy
+                    let aCopy = document.getElementsByClassName('copy');
+                    for (let i = 0; i < aCopy.length; i++) {
+                        aCopy[i].onclick = function () {
+                            let newTr = this.parentNode.parentNode.cloneNode(true);
+                            table.appendChild(newTr);
+                            // 重新获取aCopy,就可以执行对已复制的内容重新复制
+                            createEle();
+                        }
+                    }
+                    // 删除操作
+                    let aDel = document.getElementsByClassName('del'); 
+                    for (let j = 0; j < aCopy.length; j++) {
+                        aDel[j].onclick = function () {
+                            let newTr = this.parentNode.parentNode;
+                            table.removeChild(newTr);
+                            createEle();
+                        }
+                    }
+                }
+
+                createEle();
+                
+            }
+                        
+        }
+
+    })();
+
+</script>
+
+</html>

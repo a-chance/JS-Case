@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="">
+    <script src=""></script>
+    <title>wwg</title>
+    <style>
+        body{font-family:"Microsoft yahei";}
+        body,dl,dd,p,h1,h2,h3,h4,h5,h6{margin:0;}
+        ol,ul,li{margin:0;padding:0;list-style:none;}
+        img{border:none;display: block;}
+        a{text-decoration: none; color: inherit;}
+        input{outline: none;}
+        .fl{float: left;}
+        .fr{float: right;}
+        .clearfix::after{display: block; content: ""; clear: both;}
+        .box1{
+            background-color: red;
+        }
+        .box2{
+            background-color: green;
+        }
+        .box3{
+            background-color: blue;
+        }
+        .tips{
+            display: none;            
+            overflow: hidden;
+            position: fixed;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 200px;
+            border-radius: 5px;
+        }
+        .none{
+            display: none;
+        }
+
+        .on{
+            display: block;
+        }
+
+        .tips .tips-tit{
+            height: 50px;
+            background-color: pink;
+            line-height: 50px;
+            padding-left: 50px;
+            box-sizing: border-box;
+        }
+        .tips .tips-con{
+            height: 150px;
+            background-color: #cccccc;
+            line-height: 150px;
+            font-size: 60px;
+            text-align: center;
+        }
+        #btn{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: rgb(31, 204, 204);
+            color: #ffffff;
+            text-align: center;
+            line-height: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="box box1"></div>
+    <div class="box box2"></div>
+    <div class="box box3"></div>
+
+    <div class="tips">
+        <div class="top">
+            <p class="tips-tit">title</p>
+            <p id="btn">X</p>
+        </div>
+        <div class="tips-con">content</div>
+    </div>
+
+    <script>
+        let box = document.getElementsByClassName("box");
+        let tips = document.getElementsByClassName("tips")[0];
+        let btn = document.getElementById("btn");
+        // 判断广告弹出后是否再出现
+        let istrue = true;
+
+        // 设置每个盒子的高度和浏览器窗口一样高
+        for(let i = 0; i < box.length; i++){
+            box[i].style.width = window.innerWidth + "px";
+            box[i].style.height = window.innerHeight + 'px';
+        }
+        // 滚轮事件
+        window.onscroll = function () {
+            // 动态获取滚动条的滚动距离
+            let scrollTop = window.scrollY;
+
+            if(istrue){
+                if (scrollTop > parseInt(window.innerHeight / 2)) {
+                    tips.classList.add("on");
+
+                } else {
+                    tips.classList.remove("on");
+                }
+            }
+
+        }
+        // 控制弹窗的次数
+        let num = 0;
+
+        btn.onclick = function () {
+            tips.classList.remove("on");
+            istrue = !istrue;
+
+            // 设置定时器如果关闭次数超过2次就不再弹出
+            num++;
+            // 这里的定时器要用setInterval,不能用setTimeout
+            let timeId = setInterval(() => {
+                if (num === 2) {
+                    clearInterval(timeId);
+                    istrue = false;
+                }else{
+                    tips.classList.add("on");
+                }
+            }, 1500);
+        }
+
+    </script>
+</body>
+</html>
