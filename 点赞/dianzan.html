@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>微博点赞</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            padding: 50px;
+            background: #d8d8d8;
+        }
+
+        li {
+            list-style: none;
+            background: #fff;
+            width: 600px;
+            height: 100px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        li .title {
+            padding: 5px;
+            font-size: 14px;
+            font-weight: lighter;
+
+        }
+
+        li .name {
+            color: #ccc;
+            position: absolute;
+            left: 10px;
+            bottom: 10px;
+        }
+
+        li .good {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        li .good span {
+            display: block;
+            width: 120px;
+            height: 40px;
+            line-height: 40px;
+            text-align: center;
+            cursor: pointer;
+            color: #fff;
+            margin-right: 10px;
+            float: left;
+            border-radius: 20px;
+
+        }
+
+        li .good span:nth-child(1) {
+            background: lightblue;
+        }
+
+        li .good span:nth-child(2) {
+            background: lightcoral;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="list">
+        <!-- <li data-id="">
+            <h3 class="title">说三条支撑你活下去的理由？因为我胡三六条，可是六条被人杠了……</h3>
+            <p class="name">malin</p>
+            <p class="good">
+                <span class="dianzan">点赞：15</span>
+                <span class="dis">评论：22</span>
+            </p>
+        </li> -->
+
+    </ul>
+
+</body>
+<script src="api/common.js"></script>
+<script>
+    let list = document.getElementById("list");
+
+    ajax({
+        'type' : 'post',
+        'url' : 'api/weibo.json',
+        'success' : function (str) {
+            let arr = JSON.parse(str);
+            let html = arr.map(val => {
+                return `<li data-id="${val.id}">
+                            <h3 class="title">${val.content}</h3>
+                            <p class="name">${val.username}</p>
+                            <p class="good">
+                                <span class="dianzan">点赞：${val.good}</span>
+                                <span class="dis">评论：${val.con}</span>
+                            </p>
+                        </li>`;
+            }).join("");
+            list.innerHTML = html;
+            
+            // 点赞数量
+            list.onclick = function (ev) {
+                if(ev.target.className == "dianzan"){
+                    let id = ev.target.parentNode.parentNode.dataset.id;
+                    // 把点击的数据对应的id传给后台，后台帮忙处理（修改本地文件）                    
+                    ajax({
+                            'type' : 'post',
+                            'data' : {
+                                'id' : id
+                            },
+                            'url' : 'api/dianzan.php',
+                            'success' : str => {
+                                ev.target.innerHTML = `点赞：${str}`;
+                            }
+                    })
+                }
+            }
+
+
+        }
+    })
+</script>
+
+</html>
