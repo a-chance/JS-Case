@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0;padding: 0;}
+
+        #box{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            background: pink;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div id="box"></div>
+    <script>
+        let SPEED_X = 3;
+        let SPEED_Y = 3;
+
+        // 获取小球运动的最大宽 高
+        let MAX_X = document.documentElement.clientWidth - box.offsetWidth;
+        let MAX_Y = document.documentElement.clientHeight - box.offsetHeight;
+
+        window.onresize = () => {
+            MAX_X = document.documentElement.clientWidth - box.offsetWidth;
+            MAX_Y = document.documentElement.clientHeight - box.offsetHeight;
+        }
+
+        // 获取初始位置
+        let sTop = box.offsetTop;
+        let sLeft = box.offsetLeft;
+
+        // 定义一个回调函数，让小球运动的回调
+        let run = function () {
+            sTop += SPEED_Y;
+            sLeft += SPEED_X;
+
+            // 方法一：
+            if(sTop <= 0 || sTop >= MAX_Y ){
+                SPEED_Y = -SPEED_Y;
+                sTop = Math.max(0, sTop);
+                sTop = Math.min(MAX_Y, sTop);
+            }
+            if(sLeft <= 0 || sLeft >= MAX_X ){
+                SPEED_X = -SPEED_X;
+                sLeft = Math.max(0, sLeft);
+                sLeft = Math.min(MAX_X, sLeft);
+            }
+
+            // 方法二：
+            // if(sTop <= 0){
+            //     SPEED_Y = -SPEED_Y;
+            //     sTop = 0;
+            // }
+            // if(sTop >= MAX_Y){
+            //     SPEED_Y = -SPEED_Y;
+            //     sTop = MAX_Y;
+            // }
+
+            // if(sLeft <= 0){
+            //     SPEED_X = -SPEED_X;
+            //     sLeft = 0;
+            // }
+            // if(sLeft >= MAX_X){
+            //     SPEED_X = -SPEED_X;
+            //     sLeft = MAX_X;
+            // }
+
+            box.style.top = sTop + "px";
+            box.style.left = sLeft + "px";
+
+            requestAnimationFrame(run);
+        }
+
+        run();
+    </script>
+</body>
+</html>
