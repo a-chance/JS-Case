@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义滚动条</title>
+    <link rel="stylesheet" href="./css/public.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font: 16px/1.5 'Microsoft Yahei';
+            overflow: scroll;
+            overflow-y: hidden;
+            background: url("./images/img0.jpg") no-repeat;
+            background-size: ;
+        }
+
+        .clearfix:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+
+        .fl {
+            float: left;
+        }
+
+        .fr {
+            float: right;
+        }
+
+        #wrap {
+            position: absolute;
+            width: 220px;
+            height: 600px;
+            background: #f60;
+            left: 10%;
+            top: 50%;
+            margin-top: -300px;
+            color: #fff;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border-radius: 10px;
+        }
+
+        #wrap ul h4 {
+            width: 120px;
+            text-indent: 12px;
+            border: outset 2px #eee;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+
+        #wrap ul.content {
+            width: 198px;
+            padding: 10px;
+            line-height: 2.5;
+            position: absolute;
+        }
+
+        #wrap ul.content li {
+            cursor: pointer;
+            border-bottom: 1px solid #fff;
+            text-indent: 12px;
+        }
+
+        #wrap .scrollbar {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 20px;
+            height: 698px;
+            background-color: #ccc;
+            box-shadow: 0 0 6px 0 #666 inset;
+            border-radius: 10px;
+            border: 1px solid #888;
+        }
+
+        #wrap .scrollbar.hide {
+            display: none;
+        }
+
+        #wrap .scrollbar i {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            background: #f60;
+            border-radius: 10px;
+        }
+
+        .wrnr {
+            position: absolute;
+            width: 1100px;
+            height: 600px;
+            margin-top: -300px;
+            margin-left: -550px;
+            top: 50%;
+            left: 60%;
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <ul class="content">
+            <h4>html</h4>
+            <li>
+                <a href="./html/三角形 新闻 图片展示/00  - 三角形.html" target='frameright'> 1.三角形</a>
+            </li>
+            <li>
+
+                <a href="./html/三角形 新闻 图片展示/01 -  列表.html" target='frameright'> 2.新闻列表</a>
+            </li>
+            <li>
+
+                <a href="./html/三角形 新闻 图片展示/02 - 图片展示.html" target='frameright'> 3.图片展示</a>
+            </li>
+            <li>
+
+                <a href="./html/选项卡新闻 天猫列表  左侧菜单 潮流排行/00 -选项卡新闻列表.html" target='frameright'> 4.选项卡新闻</a>
+            </li>
+            <li>
+
+                <a href="./html/选项卡新闻 天猫列表  左侧菜单 潮流排行/01 - 天猫列表.html" target='frameright'> 5.天猫列表</a>
+            </li>
+            <li>
+
+                <a href="./html/选项卡新闻 天猫列表  左侧菜单 潮流排行/02 - 左侧菜单.html" target='frameright'> 6.左侧菜单</a>
+            </li>
+            <li>
+
+                <a href="./html/复杂版图片展示 官方商城左侧菜单 竖直二级菜单 侧边滑动导航/00 - 复杂版图片展示.html" target='frameright'> 7.复杂版图片展示 </a>
+            </li>
+            <li>
+
+                <a href="./html/复杂版图片展示 官方商城左侧菜单 竖直二级菜单 侧边滑动导航/01 - 亲润官方商城左侧菜单.html" target='frameright'> 8.官方商城左侧菜单</a>
+            </li>
+            <li>
+
+                <a href="./html/复杂版图片展示 官方商城左侧菜单 竖直二级菜单 侧边滑动导航/02 - 竖直二级菜单.html" target='frameright'> 9.竖直菜单</a>
+            </li>
+            <li>
+
+                <a href="./html/复杂版图片展示 官方商城左侧菜单 竖直二级菜单 侧边滑动导航/03 - 侧边滑动导航.html" target='frameright'> 10.侧边滑动导航</a>
+            </li>
+            <li>
+
+                <a href="./html/新浪导航 微信 护肤品  列表 圆hover/00 - 新浪导航.html" target='frameright'> 11.新浪导航 </a>
+            </li>
+            <li>
+
+                <a href="./html/新浪导航 微信 护肤品  列表 圆hover/01 - 微信.html" target='frameright'> 12. 微信 </a>
+            </li>
+            <li>
+
+                <a href="./html/新浪导航 微信 护肤品  列表 圆hover/02 - 护肤品.html" target='frameright'> 13.护肤品 </a>
+            </li>
+            <li>
+
+                <a href="./html/新浪导航 微信 护肤品  列表 圆hover/03 - 美女介绍.html" target='frameright'> 14. 详细介绍</a>
+            </li>
+            <li>
+
+                <a href="./html/新浪导航 微信 护肤品  列表 圆hover/04 - 圆角.html" target='frameright'> 15. 圆hover</a>
+            </li>
+            <li>
+
+                <a href="./html/腾讯课堂导航  竖直图片列表/01 - 腾讯课堂菜单.html" target='frameright'> 16.腾讯课堂导航菜单</a>
+            </li>
+            <li>
+
+                <a href="./html/腾讯课堂导航  竖直图片列表/03 - 竖直图片列表.html" target='frameright'> 17. 竖直图片列表</a>
+            </li>
+            <li>
+
+                <a href="./html/商城登录  注册页面 快递单/00 - 商城登录.html" target='frameright'> 18. 商城登录页面</a>
+            </li>
+            <li>
+
+                <a href="./html/商城登录  注册页面 快递单/01 - 注册.html" target='frameright'> 19. 注册页面</a>
+            </li>
+            <li>
+
+                <a href="./html/商城登录  注册页面 快递单/03 - 快递单.html" target='frameright'> 20. 快递单</a>
+            </li>
+            <li>
+
+                <a href="./html/阿里图标/01 - 天猫导航.html" target='frameright'> 21. 阿里图标</a>
+            </li>
+            <li>
+
+                <a href="./html/纯css选项卡 css导航栏/01 - 第二章选项卡.html" target='frameright'> 22. 纯css选项卡</a>
+            </li>
+            <li>
+
+                <a href="./html/纯css选项卡 css导航栏/02 - 第三章导航栏.html" target='frameright'> 23. 纯css导航</a>
+            </li>
+            <li>
+
+                <a href="./html/二级菜单 文字透明 携程导航/00 - 二级菜单.html" target='frameright'> 24. 二级菜单</a>
+            </li>
+            <li>
+
+                <a href="./html/二级菜单 文字透明 携程导航/01 - 文字透明.html" target='frameright'> 25. 文字透明</a>
+            </li>
+            <li>
+
+                <a href="./html/二级菜单 文字透明 携程导航/02 - 携程导航.html" target='frameright'> 25. 携程导航</a>
+            </li>
+
+            <h4>javaScript</h4>
+            <li>
+
+                <a href="./js/发表评论/1 发表信息.html" target='frameright'> 1.发表评论</a>
+            </li>
+            <li>
+
+                <a href="./js/发表评论/2  生产10个div.html" target='frameright'> 2点击div 生产10个盒子</a>
+            </li>
+            <li>
+
+                <a href="./js/发表评论/3  生成左尖括号图形.html" target='frameright'> 3.生成左尖括号图形</a>
+            </li>
+            <li>
+
+                <a href="./js/好友列表/index.html" target='frameright'> 4.好友列表</a>
+            </li>
+            <li>
+
+                <a href="./js/发表评论/4 案例隔行变色.html" target='frameright'> 5.隔行变色</a>
+            </li>
+            <li>
+
+                <a href="./js/全选 全不选 反选/01 作业全选.html" target='frameright'> 6.全选 全不选 反选</a>
+            </li>
+            <li>
+
+                <a href="./js/星级打分  购物车结算/01-星级打分.html" target='frameright'> 7.星级打分</a>
+            </li>
+            <li>
+
+                <a href="./js/星级打分  购物车结算/02-购物车结算.html" target='frameright'> 8.购物车结算</a>
+            </li>
+
+
+            <li>
+
+                <a href="./js/发表评论/5查找替换.html" target='frameright'> 9.查找替换</a>
+            </li>
+
+
+            <li>
+
+                <a href="./js/js选项卡/03-常见的选项卡.html" target='frameright'> 10.选项卡</a>
+            </li>
+
+            <li>
+
+                <a href="./js/价格排序 上下滚动/01-商品价格排序.html" target='frameright'> 11.价格排序</a>
+            </li>
+
+            <li>
+
+                <a href="./js/价格排序 上下滚动/02 上下滚动.html" target='frameright'> 12.按下不动 滚动</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/6 当前时间.html" target='frameright'> 13.Now当前时间</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/7 过年倒计时.html" target='frameright'> 14.距离过年还有</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/8 案例【世界各地时间】.html" target='frameright'> 15.世界各地时间</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/9 随机色.html" target='frameright'> 16.随机色卡</a>
+            </li>
+
+            <li>
+
+                <a href="./js/图片时间/01 图片时间.html" target='frameright'> 17.图片时间</a>
+            </li>
+
+            <li>
+
+                <a href="./js/无缝轮播/无缝轮播.html" target='frameright'> 18.无缝轮播图</a>
+            </li>
+
+            <li>
+
+                <a href="./js/图片飞入/01 图片飞入.html" target='frameright'> 19.图片飞入</a>
+            </li>
+
+            <li>
+
+                <a href="./js/地区添加  图片滑动时间/02 图片时间.html" target='frameright'> 20.图片滑动时间</a>
+            </li>
+
+            <li>
+
+                <a href="./js/地区添加  图片滑动时间/01-【地区添加】.html" target='frameright'> 21.地区添加 或者删除</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/10 小球运动.html" target='frameright'> 22.小球运动</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/11 多个小球.html" target='frameright'> 23.多个小球运动</a>
+            </li>
+
+
+            <li>
+
+                <a href="./js/发表评论/12 拖拽.html" target='frameright'> 24.盒子拖拽</a>
+            </li>
+
+
+            <li>
+
+                <a href="./js/发表评论/13拖动和八向缩放.html" target='frameright'> 25.拖拽和八角缩放</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/14 观察者模式.html" target='frameright'> 26.观察者模式</a>
+            </li>
+
+
+            <li>
+
+                <a href="./js/发表评论/16表格的添加和删除.html" target='frameright'> 27.表格添加或删除</a>
+            </li>
+
+            <li>
+
+                <a href="./js/发表评论/15 paint.html" target='frameright'> 28.自定义画板</a>
+            </li> 
+
+
+        </ul>
+        <div class="scrollbar">
+            <i></i>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+
+            var oWrap = document.getElementById("wrap"),
+                oContent = oWrap.getElementsByTagName("ul")[0],
+                oScroll = oWrap.getElementsByTagName("div")[0],
+                oBar = oScroll.children[0],
+
+                wrapH = oWrap.offsetHeight,
+                contentH = oContent.offsetHeight;
+
+            //滑块大小的确定，以及后续事件的添加
+            (function () {
+                if (contentH <= wrapH) {
+                    //如果content比wrap小或者等，那么scrollbar应该隐藏
+                    oScroll.className += " hide";
+                } else {
+                    //否则，按照比例来求出滑块的高度值
+                    var height = wrapH * wrapH / contentH,
+                        maxTop = wrapH - height,
+                        minTop = 0,
+                        maxContent = contentH - wrapH
+
+                    //设定bar初始高度
+                    oBar.style.height = height + 'px';
+
+                    //变化bar的top和content的top
+                    function changeTop(top) {
+                        top = Math.min(top, maxTop); //限定最大值
+                        top = Math.max(top, minTop); //限定最小值
+                        //变化bar的top
+                        oBar.style.top = top + 'px';
+                        //变化content的top
+                        var contentTop = top * maxContent / maxTop;
+                        oContent.style.top = -contentTop + 'px';
+                    };
+
+                    //拖拽滑块的事件
+                    (function () {
+                        //按下
+                        oBar.onmousedown = function (ev) {
+                            ev = ev || window.event;
+
+                            var downY = ev.clientY; //鼠标按下时的y坐标
+                            var downTop = oBar.offsetTop; //滑块按下时的top
+
+                            //移动
+                            document.onmousemove = function (ev) {
+                                ev = ev || window.event;
+                                var moveY = ev.clientY; //鼠标移动时的y坐标
+                                var y_ = moveY - downY; //y坐标变化量
+                                var top = downTop + y_; //通过变化量得到此时的top值
+
+                                //在这里求top最大最小值？？不行
+
+                                changeTop(top);
+
+                            };
+                        };
+
+                        //抬起
+                        document.onmouseup = function (ev) {
+                            this.onmousemove = null;
+                        };
+                    })();
+
+                    //滚动事件
+                    (function () {
+                        //wrap添加滚轮事件
+                        mousewheel(oWrap, function (ev, dr) {
+                            var top = oBar.offsetTop - dr * 10;
+
+                            changeTop(top);
+                            return false;
+                        });
+
+                    })();
+
+                    //点击scrollbar的事件
+                    (function () {
+                        oScroll.onclick = function (ev) {
+                            //只有点击空白处才有效
+                            ev = ev || window.event;
+                            if ((ev.target || ev.srcElement) !== this) return;
+                            var y = ev.layerY !== undefined ? ev.layerY : ev.y;
+                            changeTop(y - height / 2);
+                        };
+                    })();
+                }
+            })();
+        })();
+
+        function mousewheel(obj, eFn) {
+            function fn(e) {
+                e = e || window.event;
+                //让滚动方向和值统一
+                var direction = e.wheelDelta / 120 || -e.detail / 3;
+                if (eFn.call(obj, e, direction) === false) {
+                    e.preventDefault ? e.preventDefault() : e.returnValue = false;
+                }
+            }
+            //判断是否是火狐浏览器
+            var type = document.onmousewheel === null ? "mousewheel" : "DOMMouseScroll";
+            //判断是否是IE8
+            window.addEventListener ? obj.addEventListener(type, fn) :
+                obj.attachEvent("on" + type, fn);
+
+        }
+    </script>
+</body>
+
+</html>
